@@ -1,0 +1,2 @@
+Pre-requisites:
+pip install pytesseract opencv-python tk reportlab pyinstaller pypdf2 
