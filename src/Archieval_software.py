@@ -26,12 +26,12 @@ except ImportError:
 class OCRApplication:
     def __init__(self, root):
         self.root = root
-        self.root.title("Advanced OCR Application")
+        self.root.title("Archieval_software")
         self.root.geometry("900x700")
         self.root.resizable(True, True)
-        
-        # Configure tesseract path
-        pytesseract.pytesseract.tesseract_cmd = r"E:\Github\Archieval_Sofware\Tesseract\tesseract.exe"
+
+        # Configure tesseract path - look in current directory
+        self.setup_tesseract_path()
         
         # Variables
         self.current_image = None
@@ -41,6 +41,48 @@ class OCRApplication:
         
         # Setup GUI
         self.setup_gui()
+    
+    def setup_tesseract_path(self):
+        """Setup Tesseract path based on current directory"""
+        # Get the directory where this script is located
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        # Common possible locations for tesseract executable
+        possible_paths = [
+            os.path.join(current_dir, "Tesseract", "tesseract.exe"),  
+            os.path.join(current_dir, "tesseract", "tesseract.exe"),  
+            os.path.join(current_dir, "Tesseract", "tesseract"),      
+            os.path.join(current_dir, "tesseract", "tesseract"),      
+            os.path.join(current_dir, "tesseract.exe"),              
+            os.path.join(current_dir, "tesseract"),                   
+        ]
+        
+        # Try to find tesseract executable
+        tesseract_path = None
+        for path in possible_paths:
+            if os.path.isfile(path):
+                tesseract_path = path
+                break
+        
+        if tesseract_path:
+            pytesseract.pytesseract.tesseract_cmd = tesseract_path
+            print(f"Tesseract found at: {tesseract_path}")
+        else:
+            # Try system PATH
+            try:
+                # Test if tesseract is available in system PATH
+                pytesseract.image_to_string(Image.new('RGB', (100, 100), color='white'))
+                print("Using Tesseract from system PATH")
+            except Exception as e:
+                error_msg = (
+                    f"Tesseract not found!\n"
+                    f"Searched in:\n" + "\n".join(possible_paths) + "\n\n"
+                    f"Please ensure Tesseract is installed and available in one of these locations "
+                    f"or in your system PATH.\n\n"
+                    f"Current directory: {current_dir}"
+                )
+                messagebox.showerror("Tesseract Not Found", error_msg)
+                print(f"Error: {error_msg}")
         
     def setup_gui(self):
         """Setup the main GUI interface"""
