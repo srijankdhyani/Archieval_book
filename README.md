@@ -7,7 +7,6 @@ An Archieval Software that use's Scanner's, Camera's & Batch images to allow for
 Current Condition of the program:
 
 ✅ Functional Features:
-
 Image Import: Supports JPEG and PNG file formats
 Batch Import: Import multiple files at once
 Camera Capture: Capture images directly from the camera
@@ -16,11 +15,7 @@ PDF export
 TXT export
 
 🧪 Features Pending Testing
-
 Scanner Input: Functionality exists but has not been fully tested
 
 ⚠️ Known Issues
-
-Tesseract Not Pre-installed:
-The OCR engine (Tesseract) is not pre-configured in the default user directory.
-Expected path: E:\Github\Archieval_Software\Tesseract\tesseract.exe
+None as of now
