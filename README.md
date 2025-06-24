@@ -1,4 +1,4 @@
-# Archieval_book
+# GrindTXT
 The following software is targeted towards people dedicated towards Archieving and preserving old & Ancient books.
 
 Scope:
